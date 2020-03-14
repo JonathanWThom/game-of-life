@@ -22,20 +22,11 @@ func (c *Cell) SetNextGenLiving(game *Game) {
 	// Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
 	count := c.LivingNeighborsCount(game)
-	if c.IsLiving() {
-		if count < 2 {
-			c.NextGenLiving = false
-		} else if count <= 3 {
-			c.NextGenLiving = true
-		} else {
-			c.NextGenLiving = false
-		}
+	living := c.IsLiving()
+	if count == 3 || (living && count == 2) {
+		c.NextGenLiving = true
 	} else {
-		if count == 3 {
-			c.NextGenLiving = true
-		} else {
-			c.NextGenLiving = false
-		}
+		c.NextGenLiving = false
 	}
 }
 
